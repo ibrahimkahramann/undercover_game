@@ -6,6 +6,7 @@ class GameService with ChangeNotifier {
   int _playerCount = 3;
   final List<Player> _players = [];
   bool _gameHasStarted = false;
+  int _roundNumber = 1;
 
   final List<Map<String, String>> _wordPairs = [
     {'citizenWord': 'Cat', 'undercoverWord': 'Tiger'},
@@ -16,6 +17,7 @@ class GameService with ChangeNotifier {
   int get playerCount => _playerCount;
   List<Player> get players => _players;
   bool get gameHasStarted => _gameHasStarted;
+  int get roundNumber => _roundNumber;
 
 
   void setupGame(List<String> playerNames) {
@@ -51,6 +53,7 @@ class GameService with ChangeNotifier {
       _players.clear();
       _playerCount = 3;
       _gameHasStarted = false;
+      _roundNumber = 1;
       notifyListeners();
   }
 }

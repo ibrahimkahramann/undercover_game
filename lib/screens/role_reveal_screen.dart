@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/player_model.dart';
 import '../services/game_service.dart';
+import 'game_round_screen.dart';
 
 class RoleRevealScreen extends StatefulWidget {
   const RoleRevealScreen({super.key});
@@ -31,10 +32,7 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text("Game Round 1")),
-          body: const Center(child: Text("The game starts now!")),
-        )),
+        MaterialPageRoute(builder: (context) => const GameRoundScreen()),
       );
     }
   }
