@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'services/game_service.dart';
+import 'screens/player_setup_screen.dart';
 
 void main() {
   runApp(
@@ -19,10 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Undercover Game',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const Placeholder(),
+      home: const PlayerSetupScreen(),
     );
   }
 }
