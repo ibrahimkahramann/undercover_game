@@ -77,10 +77,40 @@ class GameService with ChangeNotifier {
       notifyListeners();
   }
 
-  void eliminatePlayer(Player eliminatedPlayer) {
-    final player = _players.firstWhere((p) => p.name == eliminatedPlayer.name);
-    player.isEliminated = true;
-    _lastVoteResult = "${player.name} was eliminated.";
+void tallyVotesAndEliminate(Map<Player, int> votes) {
+    if (votes.isEmpty) {
+      _lastVoteResult = "No votes were cast. No one is eliminated.";
+      _roundNumber++;
+      notifyListeners();
+      return;
+    }
+
+    int maxVotes = 0;
+    votes.forEach((player, voteCount) {
+      if (voteCount > maxVotes) {
+        maxVotes = voteCount;
+      }
+    });
+
+    if (maxVotes == 0) {
+      _lastVoteResult = "No votes were cast. No one is eliminated.";
+      _roundNumber++;
+      notifyListeners();
+      return;
+    }
+
+    final mostVotedPlayers = votes.entries
+        .where((entry) => entry.value == maxVotes)
+        .map((entry) => entry.key)
+        .toList();
+
+    if (mostVotedPlayers.length > 1) {
+      _lastVoteResult = "It's a tie! No one is eliminated.";
+    } else {
+      final playerToEliminate = mostVotedPlayers.first;
+      playerToEliminate.isEliminated = true;
+      _lastVoteResult = "${playerToEliminate.name} was eliminated.";
+    }
 
     final winner = _checkWinCondition();
     if (winner != null) {

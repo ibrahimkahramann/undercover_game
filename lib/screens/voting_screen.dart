@@ -1,3 +1,5 @@
+// lib/screens/voting_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/player_model.dart';
@@ -12,17 +14,18 @@ class VotingScreen extends StatefulWidget {
 }
 
 class _VotingScreenState extends State<VotingScreen> {
-  Player? _selectedPlayer;
+  late Map<Player, int> _votes;
+
+  @override
+  void initState() {
+    super.initState();
+    final gameService = Provider.of<GameService>(context, listen: false);
+    final activePlayers = gameService.players.where((p) => !p.isEliminated).toList();
+    _votes = {for (var player in activePlayers) player: 0};
+  }
   
-  void _submitVote(GameService gameService) {
-    if (_selectedPlayer == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('You must select a player to eliminate.'))
-      );
-      return;
-    }
-    
-    gameService.eliminatePlayer(_selectedPlayer!);
+  void _submitVotes(GameService gameService) {
+    gameService.tallyVotesAndEliminate(_votes);
     final result = gameService.lastVoteResult!;
 
     if (result.contains("Win")) {
@@ -33,6 +36,7 @@ class _VotingScreenState extends State<VotingScreen> {
     } else {
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           title: const Text('Vote Result'),
           content: Text(result),
@@ -57,7 +61,7 @@ class _VotingScreenState extends State<VotingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vote for the Undercover'),
+        title: const Text('Tally the Votes'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,47 +69,65 @@ class _VotingScreenState extends State<VotingScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Who is the Undercover?',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'Add votes for each player based on the group\'s decision.',
+              style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.5,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
+              child: ListView.builder(
                 itemCount: activePlayers.length,
                 itemBuilder: (context, index) {
                   final player = activePlayers[index];
-                  final isSelected = _selectedPlayer?.name == player.name;
-
-                  return ChoiceChip(
-                    label: Text(player.name, style: const TextStyle(fontSize: 18)),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedPlayer = player;
-                        }
-                      });
-                    },
-                    selectedColor: Colors.red.shade200,
-                    padding: const EdgeInsets.all(10),
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(player.name, style: const TextStyle(fontSize: 20)),
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.remove_circle_outline),
+                                onPressed: () {
+                                  setState(() {
+                                    if (_votes[player]! > 0) {
+                                      _votes[player] = _votes[player]! - 1;
+                                    }
+                                  });
+                                },
+                              ),
+                              Text(
+                                _votes[player]?.toString() ?? '0',
+                                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.add_circle_outline),
+                                onPressed: () {
+                                  setState(() {
+                                    _votes.putIfAbsent(player, () => 0);
+                                    _votes[player] = _votes[player]! + 1;
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   );
                 },
               ),
             ),
             ElevatedButton(
-              onPressed: () => _submitVote(context.read<GameService>()),
+              onPressed: () => _submitVotes(context.read<GameService>()),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 textStyle: const TextStyle(fontSize: 18),
               ),
-              child: const Text('Eliminate Selected Player'),
+              child: const Text('Finalize Votes & Eliminate'),
             ),
           ],
         ),
