@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/game_service.dart';
+import 'role_reveal_screen.dart';
 
 class PlayerSetupScreen extends StatefulWidget {
   const PlayerSetupScreen({super.key});
@@ -44,13 +45,9 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
     final gameService = Provider.of<GameService>(context, listen: false);
     gameService.setupGame(playerNames);
 
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text("Role Reveal")),
-          body: const Center(child: Text("Next screen will be here.")),
-        )
-      ),
+      MaterialPageRoute(builder: (context) => const RoleRevealScreen()),
     );
   }
 
