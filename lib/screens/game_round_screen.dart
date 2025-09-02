@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/game_service.dart';
 import '../models/player_model.dart';
+import 'voting_screen.dart';
 
 class GameRoundScreen extends StatelessWidget {
   const GameRoundScreen({super.key});
@@ -37,10 +38,7 @@ class GameRoundScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Scaffold(
-                    appBar: AppBar(title: const Text("Voting")),
-                    body: const Center(child: Text("Voting screen will be here.")),
-                  )),
+                  MaterialPageRoute(builder: (context) => const VotingScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
