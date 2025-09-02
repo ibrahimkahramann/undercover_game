@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:animate_do/animate_do.dart';
 import '../models/player_model.dart';
 import '../services/game_service.dart';
 import 'game_round_screen.dart';
@@ -99,37 +100,62 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         const SizedBox(height: 20),
-        Card(
-          elevation: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text('You are a:', style: Theme.of(context).textTheme.titleMedium),
-                Text(
-                  roleName,
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: player.role == PlayerRole.undercover ? Colors.red.shade700 : Colors.green.shade700,
+
+        FadeInUp(
+          duration: const Duration(milliseconds: 500),
+          child: Container(
+            height: 200,
+            alignment: Alignment.center,
+            child: Icon(
+              player.role == PlayerRole.undercover 
+                  ? Icons.theater_comedy 
+                  : Icons.security,
+              size: 120,
+              color: player.role == PlayerRole.undercover 
+                  ? Colors.red.shade400 
+                  : Colors.green.shade400,
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        FadeIn(
+          delay: const Duration(milliseconds: 300),
+          child: Card(
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text('You are a:', style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    roleName,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: player.role == PlayerRole.undercover ? Colors.red.shade400 : Colors.green.shade400,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text('Your secret word is:', style: Theme.of(context).textTheme.titleMedium),
-                Text(
-                  player.secretWord ?? 'Error',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Text('Your secret word is:', style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    player.secretWord ?? 'Error',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
         const SizedBox(height: 40),
-        ElevatedButton(
-          onPressed: _nextPlayerOrStartGame,
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+        FadeIn(
+          delay: const Duration(milliseconds: 500),
+          child: ElevatedButton(
+            onPressed: _nextPlayerOrStartGame,
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+            ),
+            child: const Text('Got It! Hide and Pass', style: TextStyle(fontSize: 18)),
           ),
-          child: const Text('Got It! Hide and Pass', style: TextStyle(fontSize: 18)),
         ),
       ],
     );
