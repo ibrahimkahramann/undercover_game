@@ -59,9 +59,24 @@ class _VotingScreenState extends State<VotingScreen> {
     final gameService = context.watch<GameService>();
     final activePlayers = gameService.players.where((p) => !p.isEliminated).toList();
 
+    final totalVotesCast = _votes.values.fold(0, (prev, count) => prev + count);
+
+    final bool canAddMoreVotes = totalVotesCast < activePlayers.length;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tally the Votes'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Center(
+              child: Text(
+                'Votes: $totalVotesCast / ${activePlayers.length}',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -105,12 +120,14 @@ class _VotingScreenState extends State<VotingScreen> {
                               ),
                               IconButton(
                                 icon: const Icon(Icons.add_circle_outline),
-                                onPressed: () {
-                                  setState(() {
-                                    _votes.putIfAbsent(player, () => 0);
-                                    _votes[player] = _votes[player]! + 1;
-                                  });
-                                },
+                                onPressed: canAddMoreVotes
+                                    ? () {
+                                        setState(() {
+                                          _votes.putIfAbsent(player, () => 0);
+                                          _votes[player] = _votes[player]! + 1;
+                                        });
+                                      }
+                                    : null,
                               ),
                             ],
                           )
