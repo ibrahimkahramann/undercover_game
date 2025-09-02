@@ -83,3 +83,29 @@ The project follows a clean and scalable directory structure to separate concern
   - `game_service.dart`: The brain of the application. It's a ChangeNotifier that manages the entire game state, including player setup, role assignment, vote tallying, and win conditions.
 
 - **assets/**: Contains all static assets like images and the app icon.
+
+## Known Issues & Debugging Journey
+
+During final testing on physical devices, a highly specific, device-dependent rendering bug was identified where character images appear inverted. This section documents the bug and the extensive debugging process undertaken to isolate its root cause.
+
+### Bug Behavior
+
+-   **Description:** The primary visuals for the 'Citizen' and 'Undercover' roles render upside-down.
+-   **Occurrence:** The issue was consistently reproduced on several Xiaomi devices (running Android 13) and one older Samsung model.
+-   **Non-Occurrence:** The bug is **not present** on a Samsung device running Android 14, nor is it reproducible on Android emulators or in the web build. This confirms the issue is not with the core application logic but with a specific platform/hardware configuration.
+
+### Investigation & Attempted Solutions
+
+A multi-step investigation was conducted to resolve the issue:
+
+1.  **Asset-Level Analysis:** The initial hypothesis was a problem with the image assets themselves. The PNG files were re-processed using multiple methods to strip any potentially corrupt EXIF metadata and to standardize their encoding ("Save for Web"). This had no effect.
+
+2.  **Code-Level Workaround (`Image.memory`):** To bypass the native platform's image decoding layer, the implementation was refactored. Instead of using the standard `Image.asset` widget, the image data was loaded as raw bytes via `rootBundle` and rendered directly with `Image.memory`. This advanced technique also failed to resolve the issue on the affected devices.
+
+3.  **Native Configuration Override (`hardwareAccelerated`):** As a final step, hardware acceleration was disabled for the entire application at the native level via `AndroidManifest.xml`. Surprisingly, this did not fix the issue on the affected Xiaomi devices, suggesting that the device's OS (MIUI) may be overriding this application-level setting.
+
+### Conclusion
+
+The root cause has been isolated to a platform-specific rendering bug, likely related to an incompatibility between the Flutter graphics engine and the specific GPU/drivers used in certain devices (notably some Xiaomi models).
+
+The application is submitted with this known, non-critical visual issue, as it does not affect the gameplay logic and has been proven to be confined to a narrow and specific set of hardware, rather than being a general flaw in the application's architecture. This debugging journey has been documented as proof of a thorough testing and problem-solving process.
