@@ -6,17 +6,16 @@ The project not only fulfills all the core requirements but also includes a poli
 
 ## Screenshots
 
-### Player Setup
-![Player Setup Screen](screenshots/playersetupscreen.png)
+<div align="center">
+  <img src="screenshots/playersetupscreen.png" width="200" alt="Player Setup Screen">
+  <img src="screenshots/rolerevealscreen.png" width="200" alt="Role Reveal Screen">
+  <img src="screenshots/votingscreen.png" width="200" alt="Voting Screen">
+  <img src="screenshots/gameoverscreen.png" width="200" alt="Game Over Screen">
+</div>
 
-### Role Reveal with Visuals
-![Role Reveal Screen](screenshots/rolerevealscreen.png)
-
-### Voting / Tallying
-![Voting Screen](screenshots/votingscreen.png)
-
-### Game Over
-![Voting Screen](screenshots/gameoverscreen.png)
+<div align= "center">
+Player Setup • Role Reveal • Voting • Game Over
+</div>
 
 ## Features
 
