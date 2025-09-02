@@ -45,7 +45,7 @@ To run this project locally, follow these steps:
 
 ### Clone the Repository:
 ```bash
-git clone <your_github_repository_url>
+git clone https://github.com/ibrahimkahramann/undercover_game
 ```
 
 ### Navigate to the Project Directory:
