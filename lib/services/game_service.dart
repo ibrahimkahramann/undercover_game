@@ -3,6 +3,7 @@ import '../models/player_model.dart';
 import 'dart:math';
 
 class GameService with ChangeNotifier {
+  final Random _random = Random(); 
   int _playerCount = 3;
   final List<Player> _players = [];
   bool _gameHasStarted = false;
@@ -50,12 +51,11 @@ class GameService with ChangeNotifier {
   }
 
   void _assignRolesAndWords() {
-    final random = Random();
-    final wordPair = _wordPairs[random.nextInt(_wordPairs.length)];
+    final wordPair = _wordPairs[_random.nextInt(_wordPairs.length)]; // MODIFY THIS LINE
     final citizenWord = wordPair['citizenWord']!;
     final undercoverWord = wordPair['undercoverWord']!;
 
-    final undercoverIndex = random.nextInt(_players.length);
+    final undercoverIndex = _random.nextInt(_players.length); // MODIFY THIS LINE
 
     for (int i = 0; i < _players.length; i++) {
       if (i == undercoverIndex) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/player_model.dart';
 import '../services/game_service.dart';
+import 'game_over_screen.dart';
 
 class VotingScreen extends StatefulWidget {
   const VotingScreen({super.key});
@@ -22,29 +23,31 @@ class _VotingScreenState extends State<VotingScreen> {
     }
     
     gameService.eliminatePlayer(_selectedPlayer!);
+    final result = gameService.lastVoteResult!;
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: const Text('Vote Result'),
-        content: Text(gameService.lastVoteResult ?? 'An error occurred.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              if(gameService.lastVoteResult?.contains("Win") ?? false) {
-                gameService.resetGame();
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              } else {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              }
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+    if (result.contains("Win")) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => GameOverScreen(resultMessage: result)),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Vote Result'),
+          content: Text(result),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); 
+                Navigator.of(context).pop(); 
+              },
+              child: const Text('Next Round'),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
