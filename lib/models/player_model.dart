@@ -1,9 +1,4 @@
-
-enum PlayerRole {
-  citizen, 
-  undercover, 
-}
-
+enum PlayerRole { citizen, undercover }
 
 class Player {
   final String name;

@@ -6,18 +6,17 @@ import 'player_setup_screen.dart';
 class GameOverScreen extends StatelessWidget {
   final String resultMessage;
 
-  const GameOverScreen({
-    super.key,
-    required this.resultMessage,
-  });
+  const GameOverScreen({super.key, required this.resultMessage});
 
   @override
   Widget build(BuildContext context) {
     final bool citizensWon = resultMessage.contains("Citizens Win");
-    final String winnerText = citizensWon ? "Citizens Win!" : "Undercover Wins!";
+    final String winnerText =
+        citizensWon ? "Citizens Win!" : "Undercover Wins!";
 
     return Scaffold(
-      backgroundColor: citizensWon ? Colors.green.shade100 : Colors.red.shade100,
+      backgroundColor:
+          citizensWon ? Colors.green.shade100 : Colors.red.shade100,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -28,7 +27,8 @@ class GameOverScreen extends StatelessWidget {
               Icon(
                 citizensWon ? Icons.security : Icons.theater_comedy,
                 size: 100,
-                color: citizensWon ? Colors.green.shade800 : Colors.red.shade800,
+                color:
+                    citizensWon ? Colors.green.shade800 : Colors.red.shade800,
               ),
               const SizedBox(height: 20),
               Text(
@@ -36,7 +36,8 @@ class GameOverScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: citizensWon ? Colors.green.shade900 : Colors.red.shade900,
+                  color:
+                      citizensWon ? Colors.green.shade900 : Colors.red.shade900,
                 ),
               ),
               const SizedBox(height: 10),
@@ -44,7 +45,8 @@ class GameOverScreen extends StatelessWidget {
                 resultMessage,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: citizensWon ? Colors.green.shade800 : Colors.red.shade800,
+                  color:
+                      citizensWon ? Colors.green.shade800 : Colors.red.shade800,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -54,7 +56,9 @@ class GameOverScreen extends StatelessWidget {
                   final gameService = context.read<GameService>();
                   gameService.resetGame();
                   Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => const PlayerSetupScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => const PlayerSetupScreen(),
+                    ),
                     (route) => false,
                   );
                 },

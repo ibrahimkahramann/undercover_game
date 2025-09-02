@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'services/game_service.dart';
 import 'screens/player_setup_screen.dart';
-import 'screens/tutorial_screen.dart'; 
+import 'screens/tutorial_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryColor = Color(0xFF8F3985); 
+    const Color primaryColor = Color(0xFF8F3985);
     const Color backgroundColor = Color(0xFF25283D);
     const Color surfaceColor = Color(0xFF2E324D);
     const Color textColor = Color(0xFFEFD9CE);
@@ -43,9 +43,18 @@ class MyApp extends StatelessWidget {
       ),
       scaffoldBackgroundColor: backgroundColor,
       textTheme: GoogleFonts.latoTextTheme(ThemeData.dark().textTheme).copyWith(
-        displayMedium: GoogleFonts.poppins(fontWeight: FontWeight.bold, color: textColor),
-        headlineSmall: GoogleFonts.poppins(fontWeight: FontWeight.w600, color: textColor),
-        titleMedium: GoogleFonts.lato(fontWeight: FontWeight.bold, color: textColor),
+        displayMedium: GoogleFonts.poppins(
+          fontWeight: FontWeight.bold,
+          color: textColor,
+        ),
+        headlineSmall: GoogleFonts.poppins(
+          fontWeight: FontWeight.w600,
+          color: textColor,
+        ),
+        titleMedium: GoogleFonts.lato(
+          fontWeight: FontWeight.bold,
+          color: textColor,
+        ),
         bodyMedium: GoogleFonts.lato(color: textColor),
       ),
     );

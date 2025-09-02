@@ -20,10 +20,11 @@ class _VotingScreenState extends State<VotingScreen> {
   void initState() {
     super.initState();
     final gameService = Provider.of<GameService>(context, listen: false);
-    final activePlayers = gameService.players.where((p) => !p.isEliminated).toList();
+    final activePlayers =
+        gameService.players.where((p) => !p.isEliminated).toList();
     _votes = {for (var player in activePlayers) player: 0};
   }
-  
+
   void _submitVotes(GameService gameService) {
     gameService.tallyVotesAndEliminate(_votes);
     final result = gameService.lastVoteResult!;
@@ -31,25 +32,28 @@ class _VotingScreenState extends State<VotingScreen> {
     if (result.contains("Win")) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => GameOverScreen(resultMessage: result)),
+        MaterialPageRoute(
+          builder: (context) => GameOverScreen(resultMessage: result),
+        ),
       );
     } else {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          title: const Text('Vote Result'),
-          content: Text(result),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); 
-                Navigator.of(context).pop(); 
-              },
-              child: const Text('Next Round'),
+        builder:
+            (context) => AlertDialog(
+              title: const Text('Vote Result'),
+              content: Text(result),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Next Round'),
+                ),
+              ],
             ),
-          ],
-        ),
       );
     }
   }
@@ -57,7 +61,8 @@ class _VotingScreenState extends State<VotingScreen> {
   @override
   Widget build(BuildContext context) {
     final gameService = context.watch<GameService>();
-    final activePlayers = gameService.players.where((p) => !p.isEliminated).toList();
+    final activePlayers =
+        gameService.players.where((p) => !p.isEliminated).toList();
 
     final totalVotesCast = _votes.values.fold(0, (prev, count) => prev + count);
 
@@ -72,7 +77,10 @@ class _VotingScreenState extends State<VotingScreen> {
             child: Center(
               child: Text(
                 'Votes: $totalVotesCast / ${activePlayers.length}',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
@@ -101,7 +109,10 @@ class _VotingScreenState extends State<VotingScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(player.name, style: const TextStyle(fontSize: 20)),
+                          Text(
+                            player.name,
+                            style: const TextStyle(fontSize: 20),
+                          ),
                           Row(
                             children: [
                               IconButton(
@@ -116,21 +127,26 @@ class _VotingScreenState extends State<VotingScreen> {
                               ),
                               Text(
                                 _votes[player]?.toString() ?? '0',
-                                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.add_circle_outline),
-                                onPressed: canAddMoreVotes
-                                    ? () {
-                                        setState(() {
-                                          _votes.putIfAbsent(player, () => 0);
-                                          _votes[player] = _votes[player]! + 1;
-                                        });
-                                      }
-                                    : null,
+                                onPressed:
+                                    canAddMoreVotes
+                                        ? () {
+                                          setState(() {
+                                            _votes.putIfAbsent(player, () => 0);
+                                            _votes[player] =
+                                                _votes[player]! + 1;
+                                          });
+                                        }
+                                        : null,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

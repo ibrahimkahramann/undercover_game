@@ -3,7 +3,7 @@ import '../models/player_model.dart';
 import 'dart:math';
 
 class GameService with ChangeNotifier {
-  final Random _random = Random(); 
+  final Random _random = Random();
   int _playerCount = 3;
   final List<Player> _players = [];
   bool _gameHasStarted = false;
@@ -39,7 +39,6 @@ class GameService with ChangeNotifier {
   int get roundNumber => _roundNumber;
   String? get lastVoteResult => _lastVoteResult;
 
-
   void setupGame(List<String> playerNames) {
     _players.clear();
     for (var name in playerNames) {
@@ -47,15 +46,18 @@ class GameService with ChangeNotifier {
     }
     _assignRolesAndWords();
     _gameHasStarted = true;
-    notifyListeners(); 
+    notifyListeners();
   }
 
   void _assignRolesAndWords() {
-    final wordPair = _wordPairs[_random.nextInt(_wordPairs.length)]; // MODIFY THIS LINE
+    final wordPair =
+        _wordPairs[_random.nextInt(_wordPairs.length)]; // MODIFY THIS LINE
     final citizenWord = wordPair['citizenWord']!;
     final undercoverWord = wordPair['undercoverWord']!;
 
-    final undercoverIndex = _random.nextInt(_players.length); // MODIFY THIS LINE
+    final undercoverIndex = _random.nextInt(
+      _players.length,
+    ); // MODIFY THIS LINE
 
     for (int i = 0; i < _players.length; i++) {
       if (i == undercoverIndex) {
@@ -69,15 +71,15 @@ class GameService with ChangeNotifier {
   }
 
   void resetGame() {
-      _players.clear();
-      _playerCount = 3;
-      _gameHasStarted = false;
-      _roundNumber = 1;
-      _lastVoteResult = null;
-      notifyListeners();
+    _players.clear();
+    _playerCount = 3;
+    _gameHasStarted = false;
+    _roundNumber = 1;
+    _lastVoteResult = null;
+    notifyListeners();
   }
 
-void tallyVotesAndEliminate(Map<Player, int> votes) {
+  void tallyVotesAndEliminate(Map<Player, int> votes) {
     if (votes.isEmpty) {
       _lastVoteResult = "No votes were cast. No one is eliminated.";
       _roundNumber++;
@@ -99,10 +101,11 @@ void tallyVotesAndEliminate(Map<Player, int> votes) {
       return;
     }
 
-    final mostVotedPlayers = votes.entries
-        .where((entry) => entry.value == maxVotes)
-        .map((entry) => entry.key)
-        .toList();
+    final mostVotedPlayers =
+        votes.entries
+            .where((entry) => entry.value == maxVotes)
+            .map((entry) => entry.key)
+            .toList();
 
     if (mostVotedPlayers.length > 1) {
       _lastVoteResult = "It's a tie! No one is eliminated.";
@@ -124,8 +127,10 @@ void tallyVotesAndEliminate(Map<Player, int> votes) {
 
   String? _checkWinCondition() {
     final activePlayers = _players.where((p) => !p.isEliminated).toList();
-    
-    final undercover = _players.firstWhere((p) => p.role == PlayerRole.undercover);
+
+    final undercover = _players.firstWhere(
+      (p) => p.role == PlayerRole.undercover,
+    );
 
     if (undercover.isEliminated) {
       return "The Undercover was found! Citizens Win!";

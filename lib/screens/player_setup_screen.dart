@@ -18,7 +18,10 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
   @override
   void initState() {
     super.initState();
-    _controllers = List.generate(12, (i) => TextEditingController(text: 'Player ${i + 1}'));
+    _controllers = List.generate(
+      12,
+      (i) => TextEditingController(text: 'Player ${i + 1}'),
+    );
   }
 
   @override
@@ -30,10 +33,11 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
   }
 
   void _startGame() {
-    final playerNames = _controllers
-        .sublist(0, _playerCount.toInt())
-        .map((controller) => controller.text.trim())
-        .toList();
+    final playerNames =
+        _controllers
+            .sublist(0, _playerCount.toInt())
+            .map((controller) => controller.text.trim())
+            .toList();
 
     if (playerNames.any((name) => name.isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,9 +58,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Game Setup'),
-      ),
+      appBar: AppBar(title: const Text('Game Setup')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -72,7 +74,7 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
                 value: _playerCount,
                 min: 3,
                 max: 12,
-                divisions: 9, 
+                divisions: 9,
                 label: _playerCount.toInt().toString(),
                 onChanged: (newValue) {
                   setState(() {
@@ -82,14 +84,13 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
               ),
               const SizedBox(height: 20),
 
-              
               Text(
                 'Enter Player Names',
                 style: Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
-              
+
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -109,7 +110,6 @@ class _PlayerSetupScreenState extends State<PlayerSetupScreen> {
               ),
               const SizedBox(height: 30),
 
-            
               ElevatedButton(
                 onPressed: _startGame,
                 style: ElevatedButton.styleFrom(

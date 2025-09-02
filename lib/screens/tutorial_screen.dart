@@ -16,19 +16,22 @@ class _TutorialScreenState extends State<TutorialScreen> {
   final List<TutorialSlide> _slides = [
     TutorialSlide(
       title: "Welcome to Undercover!",
-      description: "A social deduction game where you find the impostor among your friends.",
+      description:
+          "A social deduction game where you find the impostor among your friends.",
       imagePath: "assets/images/citizen.png",
       overlayColor: const Color(0xFF25283D).withOpacity(0.8),
     ),
     TutorialSlide(
       title: "Roles & Secret Words",
-      description: "Most players are Citizens with the same word.\nOne is the Undercover with a similar, but different word.",
+      description:
+          "Most players are Citizens with the same word.\nOne is the Undercover with a similar, but different word.",
       imagePath: "assets/images/undercover.png",
       overlayColor: const Color(0xFF8F3985).withOpacity(0.8),
     ),
     TutorialSlide(
       title: "Describe, Vote, Eliminate!",
-      description: "Describe your word without saying it.\nDiscuss with others and vote for who you think is the Undercover to win!",
+      description:
+          "Describe your word without saying it.\nDiscuss with others and vote for who you think is the Undercover to win!",
       imagePath: "assets/icon/icon.png",
       overlayColor: const Color(0xFFA675A1).withOpacity(0.8),
     ),
@@ -60,7 +63,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               return _buildSlide(_slides[index]);
             },
           ),
-          
+
           Positioned(
             bottom: 50,
             left: 20,
@@ -79,7 +82,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                     ),
                   ),
                 ),
-                
+
                 Row(
                   children: List.generate(
                     _slides.length,
@@ -88,15 +91,16 @@ class _TutorialScreenState extends State<TutorialScreen> {
                       width: _currentPage == index ? 12 : 8,
                       height: 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index 
-                            ? Colors.white 
-                            : Colors.white.withOpacity(0.5),
+                        color:
+                            _currentPage == index
+                                ? Colors.white
+                                : Colors.white.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ),
                 ),
-                
+
                 TextButton(
                   onPressed: () {
                     if (_currentPage == _slides.length - 1) {
@@ -131,16 +135,11 @@ class _TutorialScreenState extends State<TutorialScreen> {
         image: DecorationImage(
           image: AssetImage(slide.imagePath),
           fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(
-            slide.overlayColor,
-            BlendMode.darken,
-          ),
+          colorFilter: ColorFilter.mode(slide.overlayColor, BlendMode.darken),
         ),
       ),
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.3),
-        ),
+        decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
@@ -149,7 +148,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Spacer(),
-                
+
                 // Title
                 Text(
                   slide.title,
@@ -167,9 +166,9 @@ class _TutorialScreenState extends State<TutorialScreen> {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
@@ -197,7 +196,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                     ),
                   ),
                 ),
-                
+
                 const Spacer(),
               ],
             ),

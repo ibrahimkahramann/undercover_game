@@ -51,9 +51,10 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: _isRoleVisible
-              ? _buildRoleVisibleView(currentPlayer)
-              : _buildRoleHiddenView(currentPlayer),
+          child:
+              _isRoleVisible
+                  ? _buildRoleVisibleView(currentPlayer)
+                  : _buildRoleHiddenView(currentPlayer),
         ),
       ),
     );
@@ -72,7 +73,9 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
         Text(
           player.name,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 40),
         ElevatedButton(
@@ -80,7 +83,10 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 20),
           ),
-          child: const Text('Tap to Reveal Your Role', style: TextStyle(fontSize: 18)),
+          child: const Text(
+            'Tap to Reveal Your Role',
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       ],
     );
@@ -90,9 +96,10 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
     String roleName = player.role.toString().split('.').last;
     roleName = roleName[0].toUpperCase() + roleName.substring(1);
 
-    final String imagePath = player.role == PlayerRole.undercover
-        ? 'assets/images/undercover.png'
-        : 'assets/images/citizen.png';
+    final String imagePath =
+        player.role == PlayerRole.undercover
+            ? 'assets/images/undercover.png'
+            : 'assets/images/citizen.png';
 
     return Container(
       decoration: BoxDecoration(
@@ -100,15 +107,13 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
           image: AssetImage(imagePath),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.7), 
+            Colors.black.withOpacity(0.7),
             BlendMode.darken,
           ),
         ),
       ),
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.3),
-        ),
+        decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -167,9 +172,10 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
                       roleName,
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: player.role == PlayerRole.undercover 
-                            ? Colors.red.shade300 
-                            : Colors.green.shade300,
+                        color:
+                            player.role == PlayerRole.undercover
+                                ? Colors.red.shade300
+                                : Colors.green.shade300,
                         shadows: [
                           Shadow(
                             offset: const Offset(2, 2),
@@ -189,7 +195,10 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
@@ -199,7 +208,9 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
                       ),
                       child: Text(
                         player.secretWord ?? 'Error',
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        style: Theme.of(
+                          context,
+                        ).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           shadows: [
@@ -234,11 +245,8 @@ class _RoleRevealScreenState extends State<RoleRevealScreen> {
                     ),
                   ),
                   child: const Text(
-                    'Got It! Hide and Pass', 
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    'Got It! Hide and Pass',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),

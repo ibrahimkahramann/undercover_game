@@ -10,7 +10,7 @@ class GameRoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameService = context.watch<GameService>();
-    
+
     final activePlayers =
         gameService.players.where((p) => !p.isEliminated).toList();
     final eliminatedPlayers =
@@ -26,12 +26,22 @@ class GameRoundScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildPlayerList(context, 'Active Players', activePlayers, Colors.green),
+            _buildPlayerList(
+              context,
+              'Active Players',
+              activePlayers,
+              Colors.green,
+            ),
             const SizedBox(height: 20),
-            
+
             if (eliminatedPlayers.isNotEmpty)
-              _buildPlayerList(context, 'Eliminated Players', eliminatedPlayers, Colors.red),
-            
+              _buildPlayerList(
+                context,
+                'Eliminated Players',
+                eliminatedPlayers,
+                Colors.red,
+              ),
+
             const Spacer(),
 
             ElevatedButton(
@@ -53,13 +63,20 @@ class GameRoundScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayerList(BuildContext context, String title, List<Player> players, Color color) {
+  Widget _buildPlayerList(
+    BuildContext context,
+    String title,
+    List<Player> players,
+    Color color,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         SizedBox(
