@@ -7,14 +7,19 @@ The project not only fulfills all the core requirements but also includes a poli
 ## Screenshots
 
 <div align="center">
+  <img src="screenshots/tutorial1.png" width="200" alt="Tutorial Screen">
+  <img src="screenshots/tutorial2.png" width="200" alt="Tutorial Screen 2">
   <img src="screenshots/playersetupscreen.png" width="200" alt="Player Setup Screen">
+</div>
+
+<div align="center">
   <img src="screenshots/rolerevealscreen.png" width="200" alt="Role Reveal Screen">
   <img src="screenshots/votingscreen.png" width="200" alt="Voting Screen">
   <img src="screenshots/gameoverscreen.png" width="200" alt="Game Over Screen">
 </div>
 
 <div align= "center">
-Player Setup • Role Reveal • Voting • Game Over
+Tutorial Screen • Player Setup • Role Reveal • Voting • Game Over
 </div>
 
 ## Features
