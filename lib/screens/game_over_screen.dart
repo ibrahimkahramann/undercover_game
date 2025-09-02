@@ -43,7 +43,10 @@ class GameOverScreen extends StatelessWidget {
               Text(
                 resultMessage,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: citizensWon ? Colors.green.shade800 : Colors.red.shade800,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 50),
               ElevatedButton(
