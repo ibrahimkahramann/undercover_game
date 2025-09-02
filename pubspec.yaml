@@ -64,3 +64,5 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#25283D" # Arka plan katmanı olarak tema rengimizi kullan.
+  adaptive_icon_foreground: "assets/icon/icon.png"
